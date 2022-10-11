@@ -12,8 +12,20 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: View context attributes
+      - name: Get branch name
         uses: actions/github-script@v6
+        id: branch-name
         with:
-          script: console.log(context)
+          result-encoding: string
+          script: |
+            console.log(context?.payload?.repository.name)
+            console.log(context?.payload?.repository.owner)
+            return (
+            context?.payload?.pull_request?.head?.ref ||
+            context?.payload?.ref
+            ).replace("refs/heads/","");
 
+      - name: Print branch name
+        run: echo $BRANCH_NAME
+        env:
+          BRANCH_NAME: ${{steps.branch-name.outputs.result}}
