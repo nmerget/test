@@ -15,5 +15,6 @@ jobs:
       - name: View context attributes test
         uses: actions/github-script@v6
         with:
-          script: console.log(context)
+          script: |
+            console.log(context.payload.pull_request.head, context.payload.pull_request.base, context.payload.ref)
 
