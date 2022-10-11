@@ -12,7 +12,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: View context attributes
+      - name: View context attributes test
         uses: actions/github-script@v6
         with:
           script: console.log(context)
