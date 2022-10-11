@@ -12,9 +12,18 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: View context attributes test
+      - name: Get branch name
         uses: actions/github-script@v6
+        id: branch-name
         with:
+          result-encoding: string
           script: |
-            console.log(context.payload.pull_request.head, context.payload.pull_request.base, context.payload.ref)
+            return (
+            context?.payload?.pull_request?.head?.ref ||
+            context?.payload?.ref
+            ).replace("refs/heads/","");
 
+      - name: Print branch name
+        run: echo $BRANCH_NAME
+        env:
+          BRANCH_NAME: ${{steps.branch-name.outputs.result}}
