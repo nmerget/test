@@ -18,6 +18,8 @@ jobs:
         with:
           result-encoding: string
           script: |
+            console.log(context?.payload?.repository.name)
+            console.log(context?.payload?.repository.owner)
             return (
             context?.payload?.pull_request?.head?.ref ||
             context?.payload?.ref
